@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_mobx_dio_boilerplate/common/models/theme_palette.dart';
 import 'package:flutter_mobx_dio_boilerplate/common/themes/colors.dart';
+import 'package:flutter_mobx_dio_boilerplate/constants/font_family.dart';
 import 'package:flutter_mobx_dio_boilerplate/utils/common/colors.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -98,6 +100,15 @@ class AppTheme {
     return ThemeData.light().iconTheme;
   }
 
+  TextStyle get _bodyTextStyle {
+    return TextStyle(
+      color: palette.accentColor,
+      fontSize: 14,
+      fontWeight: FontWeight.w500,
+      fontFamily: FontFamily.quicksand,
+    );
+  }
+
   /// Button Theme
   ButtonThemeData get _buttonTheme {
     return ButtonThemeData(
@@ -108,55 +119,124 @@ class AppTheme {
     );
   }
 
+  //AppBarTheme
+  AppBarTheme get _appBarTheme {
+    return AppBarTheme(
+      color: Colors.white,
+      elevation: 0,
+      systemOverlayStyle: SystemUiOverlayStyle.light,
+      iconTheme: IconThemeData(color: _primarySwatch),
+      actionsIconTheme: IconThemeData(color: _primarySwatch),
+      titleTextStyle: _bodyTextStyle,
+      toolbarTextStyle: const TextStyle(),
+    );
+  }
+
+  ElevatedButtonThemeData get _elevatedButtonTheme {
+    return ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(36),
+        ),
+        padding: const EdgeInsets.only(left: 24, right: 24),
+        backgroundColor: palette.primaryColor,
+        minimumSize: const Size(0, 60),
+        textStyle: const TextStyle(color: Colors.white),
+        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+      ).merge(
+        ButtonStyle(
+          elevation: WidgetStateProperty.resolveWith<double>((states) {
+            if (states.contains(WidgetState.pressed)) return 2;
+            return 1;
+          }),
+        ),
+      ),
+    );
+  }
+
+  TextButtonThemeData get _textButtonTheme {
+    return TextButtonThemeData(
+      style: TextButton.styleFrom(
+        minimumSize: const Size(0, 60),
+        padding: const EdgeInsets.only(left: 24, right: 24),
+        backgroundColor: palette.primaryColor,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(36),
+        ),
+        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+      ),
+    );
+  }
+
   /// ThemeData
   ThemeData get themeData {
     return ThemeData(
-      fontFamily: 'Open Sans',
+      fontFamily: FontFamily.quicksand,
+      appBarTheme: _appBarTheme,
       brightness: mode == ThemeMode.light ? Brightness.light : Brightness.dark,
       visualDensity: VisualDensity.adaptivePlatformDensity,
       iconTheme: _originalIconTheme,
       buttonTheme: _buttonTheme,
+      elevatedButtonTheme: _elevatedButtonTheme,
+      textButtonTheme: _textButtonTheme,
       primaryColor: palette.primaryColor,
       indicatorColor: palette.accentColor,
       scaffoldBackgroundColor: palette.backgroundColor,
-      backgroundColor: palette.backgroundColor,
-      textTheme: GoogleFonts.openSansTextTheme(_originalTextTheme).copyWith(
-        headline1: _originalBodyText1.copyWith(
+      disabledColor: palette.disabledColor,
+      highlightColor: AppColors.orange,
+      hintColor: AppColors.grey,
+      textTheme: GoogleFonts.quicksandTextTheme(_originalTextTheme).copyWith(
+        displayLarge: _originalBodyText1.copyWith(
           fontSize: 24.0,
           fontWeight: FontWeight.w800,
         ),
-        headline6: _originalBodyText1.copyWith(
+        titleLarge: _originalBodyText1.copyWith(
           fontSize: 20.0,
           fontWeight: FontWeight.normal,
         ),
-        subtitle1: _originalBodyText1.copyWith(
+        titleMedium: _originalBodyText1.copyWith(
           fontSize: 16.0,
         ),
-        subtitle2: _originalBodyText1.copyWith(
+        titleSmall: _originalBodyText1.copyWith(
           fontSize: 18.0,
         ),
-        bodyText1: _originalBodyText1.copyWith(
+        bodyLarge: _originalBodyText1.copyWith(
           fontSize: 16.0,
           fontWeight: FontWeight.normal,
         ),
-        bodyText2: _originalBodyText1.copyWith(
-          fontSize: 13.0,
+        bodyMedium: _originalBodyText1.copyWith(
+          fontSize: 14.0,
           fontWeight: FontWeight.normal,
         ),
-        caption: _originalBodyText1.copyWith(
+        bodySmall: _originalBodyText1.copyWith(
           fontSize: 12.0,
           fontWeight: FontWeight.w700,
           color: palette.captionColor,
         ),
-        button: _originalBodyText1.copyWith(
-          fontSize: 15.0,
-          fontWeight: FontWeight.w900,
+        labelLarge: _originalBodyText1.copyWith(
+          fontSize: 16.0,
+          fontWeight: FontWeight.bold,
         ),
-        headline2: _originalBodyText1.copyWith(),
-        headline5: _originalBodyText1.copyWith(),
-        overline: _originalBodyText1.copyWith(),
-        headline4: _originalBodyText1.copyWith(),
-        headline3: _originalBodyText1.copyWith(),
+        displayMedium: _originalBodyText1.copyWith(),
+        headlineSmall: _originalBodyText1.copyWith(),
+        labelSmall: _originalBodyText1.copyWith(),
+        headlineMedium: _originalBodyText1.copyWith(),
+        displaySmall: _originalBodyText1.copyWith(),
+      ),
+      inputDecorationTheme: InputDecorationTheme(
+        border: InputBorder.none,
+        hintStyle: _bodyTextStyle.copyWith(color: AppColors.grey, fontSize: 14),
+        labelStyle: _bodyTextStyle.copyWith(color: palette.accentColor, fontWeight: FontWeight.normal),
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 13,
+        ),
+      ),
+      pageTransitionsTheme: const PageTransitionsTheme(
+        builders: {
+          TargetPlatform.android: CupertinoPageTransitionsBuilder(),
+          TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+        },
       ),
     );
   }

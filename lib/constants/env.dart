@@ -7,9 +7,9 @@ import 'package:injectable/injectable.dart';
 
 @LazySingleton()
 class Env {
-  static final bool IS_RELEASE = foundation.kReleaseMode;
+  static const bool IS_RELEASE = foundation.kReleaseMode;
 
-  static final bool IS_DEBUG = !foundation.kReleaseMode;
+  static const bool IS_DEBUG = !foundation.kReleaseMode;
 
   static final bool IS_TEST = Platform.environment.containsKey('FLUTTER_TEST');
 

@@ -17,22 +17,24 @@ class ApiClient {
 
   ApiClient(this.dio) {
     dio.options.baseUrl = env.config.apiBaseUrl;
-    dio.options.connectTimeout = const Duration(minutes: 3).inMilliseconds;
-    dio.options.receiveTimeout = const Duration(minutes: 3).inMilliseconds;
+    dio.options.connectTimeout = const Duration(minutes: 3);
+    dio.options.receiveTimeout = const Duration(minutes: 3);
     dio.interceptors.add(BadNetworkErrorInterceptor());
     dio.interceptors.add(InternalServerErrorInterceptor());
     dio.interceptors.add(AuthInterceptor());
     dio.interceptors.add(UnauthorizedInterceptor());
 
     if (env.config.debugApiClient) {
-      dio.interceptors.add(PrettyDioLogger(
-        requestHeader: true,
-        requestBody: true,
-        responseHeader: true,
-        responseBody: true,
-        error: true,
-        compact: true,
-      ));
+      dio.interceptors.add(
+        PrettyDioLogger(
+          requestHeader: true,
+          requestBody: true,
+          responseHeader: true,
+          responseBody: true,
+          error: true,
+          compact: true,
+        ),
+      );
     }
   }
 
@@ -48,7 +50,7 @@ class ApiClient {
       throw InternalServerException();
     } on UnauthorizedApiError {
       throw UnauthenticatedException();
-    } on DioError {
+    } on DioException {
       throw ApiException();
     }
   }
@@ -62,7 +64,7 @@ class ApiClient {
       throw InternalServerException();
     } on UnauthorizedApiError {
       throw UnauthenticatedException();
-    } on DioError {
+    } on DioException {
       throw ApiException();
     }
   }
@@ -76,7 +78,7 @@ class ApiClient {
       throw InternalServerException();
     } on UnauthorizedApiError {
       throw UnauthenticatedException();
-    } on DioError {
+    } on DioException {
       throw ApiException();
     }
   }
@@ -90,7 +92,7 @@ class ApiClient {
       throw InternalServerException();
     } on UnauthorizedApiError {
       throw UnauthenticatedException();
-    } on DioError {
+    } on DioException {
       throw ApiException();
     }
   }

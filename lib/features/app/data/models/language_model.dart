@@ -24,8 +24,7 @@ class LanguageModel extends Equatable {
     this.dictionary,
   });
 
-  factory LanguageModel.fromJson(Map<String, dynamic> json) =>
-      _$LanguageModelFromJson(json);
+  factory LanguageModel.fromJson(Map<String, dynamic> json) => _$LanguageModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$LanguageModelToJson(this);
 

@@ -1,19 +1,18 @@
-builders:
-  auto_route_generator|autoRouteGenerator:
-    import: "package:auto_route_generator/builder.dart"
-    builder_factories: [ "autoRouteGenerator" ]
-    build_extensions: { '.dart': [ '.gr.dart' ] }
-
-
 targets:
   $default:
-    auto_apply_builders: true
     builders:
-      auto_route_generator|autoRouteGenerator:
-        enabled: false
-
-  run_auto_route_generator:
-    auto_apply_builders: false
-    builders:
-      auto_route_generator|autoRouteGenerator:
-        enabled: true
+      auto_route_generator:auto_route_generator:
+        options:
+#          enable_cached_builds: true
+        generate_for:
+          - lib/**/ui/pages/**.dart
+          - lib/features/errors/**.dart
+          - lib/**router.dart
+      auto_route_generator:auto_router_generator:
+        # options:
+          # ignore_for_file:
+            # - rule-1
+            # - rule-2
+        #          enable_cached_builds: true
+        generate_for:
+          - lib/**router.dart

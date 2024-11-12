@@ -2,14 +2,14 @@ import 'package:flutter_mobx_dio_boilerplate/constants/env.dart';
 import 'package:injectable/injectable.dart';
 import 'package:logger/logger.dart';
 
-@LazySingleton()
+@lazySingleton
 class LogIt {
   final Logger logger;
 
   LogIt(this.logger);
 
-  /// Log a message at level [Level.verbose].
-  void verbose(
+  /// Log a message at level [Level.trace].
+  void trace(
     dynamic message, {
     dynamic error,
     bool showInProd = false,
@@ -19,7 +19,7 @@ class LogIt {
       return;
     }
 
-    logger.v(message, error, stackTrace);
+    logger.t(message, error: error, stackTrace: stackTrace);
   }
 
   /// Log a message at level [Level.debug].
@@ -33,7 +33,7 @@ class LogIt {
       return;
     }
 
-    logger.d(message, error, stackTrace);
+    logger.d(message, error: error, stackTrace: stackTrace);
   }
 
   /// Log a message at level [Level.info].
@@ -47,7 +47,7 @@ class LogIt {
       return;
     }
 
-    logger.i(message, error, stackTrace);
+    logger.i(message, error: error, stackTrace: stackTrace);
   }
 
   /// Log a message at level [Level.warning].
@@ -61,7 +61,7 @@ class LogIt {
       return;
     }
 
-    logger.w(message, error, stackTrace);
+    logger.w(message, error: error, stackTrace: stackTrace);
   }
 
   /// Log a message at level [Level.error].
@@ -75,11 +75,11 @@ class LogIt {
       return;
     }
 
-    logger.e(message, error, stackTrace);
+    logger.e(message, error: error, stackTrace: stackTrace);
   }
 
-  /// Log a message at level [Level.wtf].
-  void wtf(
+  /// Log a message at level [Level.fatal].
+  void fatal(
     dynamic message, {
     dynamic error,
     bool showInProd = false,
@@ -89,6 +89,6 @@ class LogIt {
       return;
     }
 
-    logger.wtf(message, error, stackTrace);
+    logger.f(message, error: error, stackTrace: stackTrace);
   }
 }

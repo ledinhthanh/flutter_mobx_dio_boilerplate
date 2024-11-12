@@ -1,10 +1,9 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_mobx_dio_boilerplate/common/di/di.dart';
 import 'package:flutter_mobx_dio_boilerplate/common/helpers/navigation_helper.dart';
 import 'package:flutter_mobx_dio_boilerplate/common/l10n/l10n_helpers.dart';
 import 'package:flutter_mobx_dio_boilerplate/common/router/router.gr.dart';
-import 'package:flutter_mobx_dio_boilerplate/features/app/data/models/theme_model.dart';
 import 'package:flutter_mobx_dio_boilerplate/features/app/ui/store/app_store.dart';
 import 'package:flutter_mobx_dio_boilerplate/features/login/ui/store/login_store.dart';
 import 'package:flutter_mobx_dio_boilerplate/utils/alerts/alerts.dart';
@@ -12,10 +11,11 @@ import 'package:flutter_mobx_dio_boilerplate/utils/common/store_helper.dart';
 import 'package:flutter_mobx_dio_boilerplate/widget_extends/sf_widget.dart';
 import 'package:mobx/mobx.dart';
 
+@RoutePage()
 class HomeScreen extends StatefulWidget {
   final String? dummyValue;
 
-  const HomeScreen({Key? key, this.dummyValue}) : super(key: key);
+  const HomeScreen({super.key, this.dummyValue});
 
   @override
   State<StatefulWidget> createState() => _HomeScreenState();
@@ -39,11 +39,6 @@ class _HomeScreenState extends SfWidget {
     _disposers = [];
 
     super.initState();
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
   }
 
   Widget buildLoginLogoutBtn(
@@ -91,11 +86,13 @@ class _HomeScreenState extends SfWidget {
                 style: const TextStyle(fontSize: 18),
               ),
             ),
-            Observer(builder: (_) {
-              final isLoggedIn = _loginStore.isLoggedIn ?? false;
+            // Observer(
+            //   builder: (_) {
+            //     final isLoggedIn = _loginStore.isLoggedIn ?? false;
 
-              return buildLoginLogoutBtn(context, isLoggedIn: isLoggedIn);
-            }),
+            //     return buildLoginLogoutBtn(context, isLoggedIn: isLoggedIn);
+            //   },
+            // ),
             ElevatedButton(
               onPressed: () {
                 _alerts.setAlert(context, 'An alert ${_count++}');
@@ -106,7 +103,7 @@ class _HomeScreenState extends SfWidget {
               onPressed: () {
                 navigateToRoute(
                   context: context,
-                  route: const ProfileScreenRoute(),
+                  route: const ProfileRoute(),
                 );
               },
               child: Text(ln(context, 'home_open_profile_btn_text')),
@@ -115,7 +112,7 @@ class _HomeScreenState extends SfWidget {
               onPressed: () {
                 navigateToRoute(
                   context: context,
-                  route: PageNotFoundScreenRoute(routeName: ''),
+                  route: PageNotFoundRoute(routeName: ''),
                 );
               },
               child: Text(ln(context, 'home_open_404_btn_text')),
@@ -123,53 +120,61 @@ class _HomeScreenState extends SfWidget {
             Column(
               children: <Widget>[
                 Text(ln(context, 'home_toggle_language_btn_text')),
-                Observer(builder: (_) {
-                  final localeValue = _appStore.language!.locale;
+                // Observer(
+                //   builder: (_) {
+                //     final localeValue = _appStore.language!.locale;
 
-                  return Switch(
-                    value: localeValue == 'en',
-                    onChanged: (value) {
-                      final locale = localeValue;
+                //     return Switch(
+                //       value: localeValue == 'en',
+                //       onChanged: (value) {
+                //         final locale = localeValue;
 
-                      if (locale == 'en') {
-                        _appStore.setAppLanguage(
-                            context, supportedL10nLanguages.last);
+                //         if (locale == 'en') {
+                //           _appStore.setAppLanguage(
+                //             context,
+                //             supportedL10nLanguages.last,
+                //           );
 
-                        return;
-                      }
+                //           return;
+                //         }
 
-                      _appStore.setAppLanguage(
-                          context, supportedL10nLanguages.first);
-                    },
-                  );
-                }),
+                //         _appStore.setAppLanguage(
+                //           context,
+                //           supportedL10nLanguages.first,
+                //         );
+                //       },
+                //     );
+                //   },
+                // ),
               ],
             ),
             Column(
               children: <Widget>[
                 Text(ln(context, 'home_toggle_theme_btn_text')),
-                Observer(builder: (_) {
-                  final themeValue = _appStore.theme!.mode;
+                // Observer(
+                //   builder: (_) {
+                //     final themeValue = _appStore.theme!.mode;
 
-                  return Switch(
-                    value: themeValue == ThemeMode.light,
-                    onChanged: (value) {
-                      if (themeValue == ThemeMode.light) {
-                        _appStore.setAppTheme(
-                          context,
-                          const ThemeModel(mode: ThemeMode.dark),
-                        );
+                //     return Switch(
+                //       value: themeValue == ThemeMode.light,
+                //       onChanged: (value) {
+                //         if (themeValue == ThemeMode.light) {
+                //           _appStore.setAppTheme(
+                //             context,
+                //             const ThemeModel(mode: ThemeMode.dark),
+                //           );
 
-                        return;
-                      }
+                //           return;
+                //         }
 
-                      _appStore.setAppTheme(
-                        context,
-                        const ThemeModel(mode: ThemeMode.light),
-                      );
-                    },
-                  );
-                }),
+                //         _appStore.setAppTheme(
+                //           context,
+                //           const ThemeModel(mode: ThemeMode.light),
+                //         );
+                //       },
+                //     );
+                //   },
+                // ),
               ],
             ),
           ],

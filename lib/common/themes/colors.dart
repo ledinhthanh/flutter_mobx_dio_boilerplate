@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
 import 'package:flutter_mobx_dio_boilerplate/common/themes/hex_color.dart';
 
 class AppColors {
   AppColors._();
+
+  static const Color orange = Color(0xFFff6810);
+  static const Color grey = Color(0xffD1D1D1);
 
   static const Color transparent = Colors.transparent;
 

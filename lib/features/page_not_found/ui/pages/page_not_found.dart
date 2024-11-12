@@ -1,6 +1,8 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx_dio_boilerplate/common/l10n/l10n_helpers.dart';
 
+@RoutePage(name: 'PageNotFoundRoute')
 class PageNotFoundScreen extends StatelessWidget {
   final String routeName;
 

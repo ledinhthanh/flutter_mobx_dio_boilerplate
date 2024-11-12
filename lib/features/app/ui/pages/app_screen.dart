@@ -5,14 +5,28 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_mobx_dio_boilerplate/common/di/di.dart';
 import 'package:flutter_mobx_dio_boilerplate/common/l10n/l10n.dart';
 import 'package:flutter_mobx_dio_boilerplate/common/l10n/l10n_helpers.dart';
-import 'package:flutter_mobx_dio_boilerplate/common/router/root_router.dart';
+import 'package:flutter_mobx_dio_boilerplate/common/router/router.dart';
 import 'package:flutter_mobx_dio_boilerplate/common/themes/theme_helper.dart';
 import 'package:flutter_mobx_dio_boilerplate/constants/env.dart';
 import 'package:flutter_mobx_dio_boilerplate/constants/strings.dart';
 import 'package:flutter_mobx_dio_boilerplate/features/app/ui/store/app_store.dart';
 
-class AppScreen extends StatelessWidget {
+class AppScreen extends StatefulWidget {
+  @override
+  State<AppScreen> createState() => _AppScreenState();
+}
+
+class _AppScreenState extends State<AppScreen> {
   final _appStore = getIt<AppStore>();
+  final _rootRouter = getIt<RootRouter>();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    // LocalNotificationHelper.initialize(context);
+    // _appStore.initFirebaseMessaging(context);
+  }
 
   void setErrorBuilder() {
     ErrorWidget.builder = (FlutterErrorDetails errorDetails) {
@@ -37,10 +51,22 @@ class AppScreen extends StatelessWidget {
         return MaterialApp.router(
           debugShowCheckedModeBanner: env.config.debugShowCheckedModeBanner,
           debugShowMaterialGrid: env.config.debugShowMaterialGrid,
-          builder: (context, nativeNavigator) {
+          // builder: (context, nativeNavigator) {
+          //   setErrorBuilder();
+          // return nativeNavigator!;
+          // },
+          builder: (BuildContext builderContext, Widget? child) {
             setErrorBuilder();
-
-            return nativeNavigator!;
+            return Overlay(
+              initialEntries: <OverlayEntry>[
+                OverlayEntry(
+                  builder: (BuildContext context) => child!,
+                ),
+                // OverlayEntry(
+                //   builder: (BuildContext context) => const AppLifecycleOverlay(),
+                // ),
+              ],
+            );
           },
           title: Strings.APP_NAME,
           theme: getAppThemeData(_appStore.theme!.mode),
@@ -69,14 +95,13 @@ class AppScreen extends StatelessWidget {
 
             // Check if the current device locale is supported
             return supportedLocales.firstWhere(
-              (supportedLocale) =>
-                  supportedLocale.languageCode == locale.languageCode,
+              (supportedLocale) => supportedLocale.languageCode == locale.languageCode,
               orElse: () => supportedLocales.first,
             );
           },
-          routeInformationParser: rootRouter.defaultRouteParser(),
+          routeInformationParser: _rootRouter.defaultRouteParser(),
           routerDelegate: AutoRouterDelegate(
-            rootRouter,
+            _rootRouter,
             navigatorObservers: () => [AutoRouteObserver()],
           ),
         );

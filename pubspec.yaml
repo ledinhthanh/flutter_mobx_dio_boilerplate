@@ -12,12 +12,10 @@ version: 2.0.0
 publish_to: none
 
 environment:
-  sdk: '>=2.12.0 <3.0.0'
-  flutter: ">=2.0.0 <3.0.0"
+  sdk: ">=3.2.6 <4.0.0"
 
 dependency_overrides:
-  analyzer: ^2.0.0
-  meta: ^1.7.0
+  web: ^1.0.0
 
 dependencies:
   flutter:
@@ -28,33 +26,33 @@ dependencies:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.3
+  cupertino_icons: ^1.0.8
 
   # The following adds the launcher icon support to your application.
   # run below mentioned commands to generate launcher icons
   # flutter packages get
   # flutter packages pub run flutter_launcher_icons:main
-  flutter_launcher_icons: ^0.9.1
+  # flutter_launcher_icons: ^0.14.1
 
   # fonts
-  google_fonts: ^2.1.0
+  google_fonts: ^6.2.1
 
   # MobX is a library for reactively managing the state of your applications. Use the power of
   # observables, actions, and reactions to supercharge your Dart and Flutter apps.
-  flutter_mobx: ^2.0.2
-  mobx: ^2.0.4
+  flutter_mobx: ^2.2.1+1
+  mobx: ^2.4.0
 
   # Service locator
-  get_it: ^7.1.4
-  injectable: ^1.4.1
-  provider: ^5.0.0
+  get_it: ^8.0.2
+  injectable: ^2.5.0
+  provider: ^6.1.2
 
   # data channel
   data_channel: ^2.0.0+1
 
   # API fetching
-  dio: ^4.0.0
-  pretty_dio_logger: ^1.2.0-beta-1
+  dio: ^5.7.0
+  pretty_dio_logger: ^1.4.0
 
   # Connectivity
   data_connection_checker: #^0.3.4
@@ -63,56 +61,53 @@ dependencies:
       ref: master
 
   # Local cache
-  shared_preferences: ^2.0.6
+  shared_preferences: ^2.3.3
 
-  meta: ^1.7.0
+  meta: ^1.15.0
 
   # Logging
-  logger: ^1.0.0
+  logger: ^2.4.0
 
   # Routing
-  auto_route: ^2.3.0
+  auto_route: ^9.2.2
 
   # snackbar
-  another_flushbar: #^1.10.23
+  another_flushbar:
     git:
-      url: https://github.com/ganeshrvel/another-flushbar
-      ref: 8b74a6aeec415678e2b751f769f73f82a098ed0b
+      url: https://github.com/ledinhthanh/another-flushbar
+      ref: 53d39920d7cd4271da86fcecd1ac110211dadd1e
 
-  flash: ^2.0.1
+  flash: ^3.1.1
 
-  after_layout: ^1.1.0
+  after_layout: ^1.2.0
 
-  equatable: ^2.0.0
+  equatable: ^2.0.5
 
   # validator
   rules: ^2.0.0
+  json_annotation: ^4.9.0
 
 dev_dependencies:
+  auto_route_generator: ^9.0.0
+
+  # Build runner
+  build_runner: ^2.4.13
   flutter_test:
     sdk: flutter
 
-  test: any
-
-  # Linting
-  lint: ^1.5.3
-
-  # Build runner
-  build_runner: ^2.0.5
-  source_gen: ^1.0.5
-
   # Service locator
-  injectable_generator: ^1.4.1
-
-  # MobX
-  mobx_codegen: ^2.0.3
-
-  # Routing
-  auto_route_generator: ^2.3.0
+  injectable_generator: ^2.6.2
 
   # Json
-  json_serializable: ^5.0.0
-  json_annotation: ^4.1.0
+  json_serializable: ^6.8.0
+
+  # Linting
+  lint: ^2.3.0
+
+  # MobX
+  mobx_codegen: ^2.6.2
+  source_gen: ^1.5.0
+
 
 flutter_icons:
   image_path: "assets/icons/ic_launcher.png"

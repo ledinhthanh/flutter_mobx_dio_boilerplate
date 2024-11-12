@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_mobx_dio_boilerplate/common/router/root_router.dart';
+import 'package:flutter_mobx_dio_boilerplate/common/di/di.dart';
+import 'package:flutter_mobx_dio_boilerplate/common/router/router.dart';
 import 'package:flutter_mobx_dio_boilerplate/common/router/router.gr.dart';
 
 bool? isCurrentScreen(BuildContext? context) {
@@ -19,71 +20,66 @@ String? getCurrentScreen(BuildContext? context) {
   return ModalRoute.of(context)!.settings.name;
 }
 
-Future<T?> navigateToRoute<T extends Object>({
+Future navigateToRoute({
   BuildContext? context,
   required PageRouteInfo route,
   bool? skipSameRouteCheck,
 }) async {
-  final _skipSameRouteCheck = skipSameRouteCheck ?? true;
+  final skipSameRouteCheck0 = skipSameRouteCheck ?? true;
 
-  if (!_skipSameRouteCheck && getCurrentScreen(context) == route.routeName) {
+  if (!skipSameRouteCheck0 && getCurrentScreen(context) == route.routeName) {
     return null;
   }
 
-  if (route.routeName == HomeScreenRoute.name) {
-    var _routeArgs = const HomeScreenRouteArgs();
+  if (route.routeName == HomeRoute.name) {
+    var routeArgs = const HomeRouteArgs();
 
-    if (route.args is HomeScreenRouteArgs) {
-      _routeArgs = route.args as HomeScreenRouteArgs;
+    if (route.args is HomeRouteArgs) {
+      routeArgs = route.args as HomeRouteArgs;
     }
 
-    return navigateToHomeScreen<T>(routeArgs: _routeArgs);
+    return navigateToHomeScreen(routeArgs: routeArgs);
   }
 
-  return rootRouter.push(route);
+  return getIt<RootRouter>().push(route);
 }
 
-Future<T?> navigateToRouteAndReplace<T extends Object>(
+Future navigateToRouteAndReplace(
   PageRouteInfo route,
 ) async {
-  if (route.routeName == HomeScreenRoute.name) {
-    var _routeArgs = const HomeScreenRouteArgs();
+  if (route.routeName == HomeRoute.name) {
+    var routeArgs = const HomeRouteArgs();
 
-    if (route.args is HomeScreenRouteArgs) {
-      _routeArgs = route.args as HomeScreenRouteArgs;
+    if (route.args is HomeRouteArgs) {
+      routeArgs = route.args as HomeRouteArgs;
     }
 
-    return navigateToHomeScreen<T>(routeArgs: _routeArgs);
+    return navigateToHomeScreen(routeArgs: routeArgs);
   }
 
-  return rootRouter.replace(
-    route,
-  );
+  return getIt<RootRouter>().replace(route);
 }
 
-Future<T?> navigateToRouteAndRemoveUntil<T extends Object>(
+Future navigateToRouteAndRemoveUntil(
   PageRouteInfo route,
 ) async {
-  return rootRouter.pushAndPopUntil<T>(
-    route,
-    predicate: (r) => false,
-  );
+  return getIt<RootRouter>().replaceAll([route]);
 }
 
 Future<bool> popCurrentRoute<T extends Object>({T? result}) async {
-  return rootRouter.pop<T>(result);
+  return getIt<RootRouter>().maybePop<T>(result);
 }
 
 bool canPopCurrentRoute<T>() {
-  return rootRouter.canPopSelfOrChildren;
+  return getIt<RootRouter>().canPop();
 }
 
 /// navigating to homescreen should clear the navigation stack and start again
-Future<T?> navigateToHomeScreen<T extends Object>({
-  HomeScreenRouteArgs? routeArgs,
+Future navigateToHomeScreen({
+  HomeRouteArgs? routeArgs,
 }) async {
-  return navigateToRouteAndRemoveUntil<T>(
-    HomeScreenRoute(
+  return navigateToRouteAndRemoveUntil(
+    HomeRoute(
       dummyValue: routeArgs?.dummyValue,
     ),
   );
@@ -91,10 +87,10 @@ Future<T?> navigateToHomeScreen<T extends Object>({
 
 void navigateToLoginScreen({
   BuildContext? context,
-  LoginScreenRouteArgs? args,
+  LoginRouteArgs? args,
 }) {
   navigateToRoute(
     context: context,
-    route: LoginScreenRoute(redirectOnLogin: args?.redirectOnLogin),
+    route: LoginRoute(redirectOnLogin: args?.redirectOnLogin),
   );
 }

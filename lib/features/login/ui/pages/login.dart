@@ -8,13 +8,14 @@ import 'package:flutter_mobx_dio_boilerplate/utils/common/store_helper.dart';
 import 'package:flutter_mobx_dio_boilerplate/widget_extends/sf_widget.dart';
 import 'package:mobx/mobx.dart';
 
+@RoutePage()
 class LoginScreen extends StatefulWidget {
   final PageRouteInfo? redirectOnLogin;
 
   const LoginScreen({
-    Key? key,
+    super.key,
     required this.redirectOnLogin,
-  }) : super(key: key);
+  });
 
   @override
   State<StatefulWidget> createState() => _LoginScreenState();
@@ -32,11 +33,6 @@ class _LoginScreenState extends SfWidget<LoginScreen> {
     _disposers = [];
 
     super.initState();
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
   }
 
   void doLogin(PostLoginRequestModel param) {

@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx_dio_boilerplate/common/di/di.dart';
 import 'package:flutter_mobx_dio_boilerplate/common/helpers/navigation_helper.dart';
@@ -9,8 +10,9 @@ import 'package:flutter_mobx_dio_boilerplate/utils/common/store_helper.dart';
 import 'package:flutter_mobx_dio_boilerplate/widget_extends/sf_widget.dart';
 import 'package:mobx/mobx.dart';
 
+@RoutePage()
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({Key? key}) : super(key: key);
+  const SplashScreen({super.key});
 
   @override
   State<StatefulWidget> createState() => _SplashScreenState();
@@ -27,7 +29,7 @@ class _SplashScreenState extends SfWidget<SplashScreen> {
       reaction(
         (_) => _loginStore.isLoggedIn,
         (bool? isLoggedIn) {
-          if (getCurrentScreen(context) != SplashScreenRoute.name) {
+          if (getCurrentScreen(context) != SplashRoute.name) {
             return;
           }
 
@@ -36,11 +38,6 @@ class _SplashScreenState extends SfWidget<SplashScreen> {
       ),
     ];
     super.initState();
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
   }
 
   @override

@@ -19,23 +19,23 @@ ThemeMode? getPlatformThemeMode(BuildContext? context) {
     return null;
   }
 
-  Brightness _brightness;
+  Brightness brightness;
 
   if (isNotNull(context)) {
-    _brightness = MediaQuery.of(context!).platformBrightness;
+    brightness = MediaQuery.of(context!).platformBrightness;
   } else {
-    _brightness = SchedulerBinding.instance!.window.platformBrightness;
+    brightness = SchedulerBinding.instance.platformDispatcher.platformBrightness;
   }
 
-  return _brightness == Brightness.dark ? ThemeMode.dark : ThemeMode.light;
+  return brightness == Brightness.dark ? ThemeMode.dark : ThemeMode.light;
 }
 
 /// returns true if dark theme mode is activated (by the user or by the platform)
 bool isDarkMode(BuildContext context) {
-  final _platformTheme = getPlatformThemeMode(context);
+  final platformTheme = getPlatformThemeMode(context);
 
-  if (isNotNull(_platformTheme)) {
-    return _platformTheme == ThemeMode.dark;
+  if (isNotNull(platformTheme)) {
+    return platformTheme == ThemeMode.dark;
   }
 
   return Theme.of(context).brightness == Brightness.dark;
@@ -45,20 +45,20 @@ bool isDarkMode(BuildContext context) {
 AppTheme getAppTheme(ThemeMode? mode) {
   if (mode == ThemeMode.light) {
     // declared in [lib/common/di/app_theme_di.dart]
-    final _lightTheme = getIt.get<AppTheme>(instanceName: 'lightTheme');
+    final lightTheme = getIt.get<AppTheme>(instanceName: 'lightTheme');
 
-    return _lightTheme;
+    return lightTheme;
   }
 
   // declared in [lib/common/di/app_theme_di.dart]
-  final _darkTheme = getIt.get<AppTheme>(instanceName: 'darkTheme');
+  final darkTheme = getIt.get<AppTheme>(instanceName: 'darkTheme');
 
-  return _darkTheme;
+  return darkTheme;
 }
 
 /// Returns [ThemeData] from [ThemeData]
 ThemeData getAppThemeData(ThemeMode mode) {
-  final _themeMode = mode;
+  final themeMode = mode;
 
   // todo uncomment this section to pick the theme from the OS
   // final _platformThemeMode = getPlatformThemeMode(null);
@@ -68,12 +68,12 @@ ThemeData getAppThemeData(ThemeMode mode) {
   //   _themeMode = _platformThemeMode!;
   // }
 
-  return getAppTheme(_themeMode).themeData;
+  return getAppTheme(themeMode).themeData;
 }
 
 /// Returns [ThemePalette] from [ThemeData]
 ThemePalette getPalette(BuildContext context) {
-  final _mode = isDarkMode(context) ? ThemeMode.dark : ThemeMode.light;
+  final mode = isDarkMode(context) ? ThemeMode.dark : ThemeMode.light;
 
-  return getAppTheme(_mode).palette;
+  return getAppTheme(mode).palette;
 }

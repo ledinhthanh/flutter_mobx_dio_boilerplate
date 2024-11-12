@@ -1,10 +1,12 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx_dio_boilerplate/utils/common/store_helper.dart';
 import 'package:flutter_mobx_dio_boilerplate/widget_extends/sf_widget.dart';
 import 'package:mobx/mobx.dart';
 
+@RoutePage()
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
+  const ProfileScreen({super.key});
 
   @override
   State<StatefulWidget> createState() => _ProfileScreenState();
@@ -21,11 +23,6 @@ class _ProfileScreenState extends SfWidget {
   }
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-  }
-
-  @override
   void dispose() {
     disposeStore(_disposers);
 
@@ -34,10 +31,10 @@ class _ProfileScreenState extends SfWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       title: 'Video Demo',
       home: Scaffold(
-        body: Text('Video Demo'),
+        body: Center(child: Container(child: const Text('Profile Screen'))),
       ),
     );
   }
